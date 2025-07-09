@@ -1,5 +1,5 @@
 import { useState } from "preact/hooks";
-import type { Task, TaskStatus } from "../types/task";
+import type { Task } from "../../types/task";
 import "./TaskForm.css";
 
 interface Props {
