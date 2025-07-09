@@ -1,0 +1,59 @@
+.column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.column h2 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 1rem;
+    padding: 1rem 0.75rem;
+    background-color: rgba(0, 0, 0, 0.03);
+    border-radius: 8px;
+    color: #444;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.column[data-status="Todo"] h2 {
+    background-color: rgba(0, 123, 255, 0.06);
+    box-shadow: 0px 0px 10px #007bff;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.column[data-status="In Progress"] h2 {
+    background-color: rgba(255, 193, 7, 0.06);
+    box-shadow: 0px 0px 10px #ffc107;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.column[data-status="Blocked"] h2 {
+    background-color: rgba(220, 53, 69, 0.06);
+    box-shadow: 0px 0px 10px #dc3545;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.column[data-status="Done"] h2 {
+    background-color: rgba(40, 167, 69, 0.06);
+    box-shadow: 0px 0px 10px #28a745;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+/**
+#007bff;
+#ffc107;
+#dc3545;
+#28a745;
+**/

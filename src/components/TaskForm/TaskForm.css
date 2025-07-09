@@ -1,0 +1,62 @@
+.task-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: #fff;
+}
+
+.task-form label {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.task-form input,
+.task-form textarea {
+    width: 100%;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    margin-bottom: 1.5rem;
+    margin-top: 0.7rem;
+    box-sizing: border-box;
+}
+
+
+.task-form .button-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.task-form button {
+    font-size: 1rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 120px;
+}
+
+.task-form button.save {
+    background-color: #28a745;
+    color: white;
+}
+
+.task-form button.save:hover {
+    background-color: #218838;
+}
+
+.task-form button.cancel {
+    background-color: #dc3545;
+    color: white;
+}
+
+.task-form button.cancel:hover {
+    background-color: #c82333;
+}
