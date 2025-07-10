@@ -10,9 +10,10 @@ import { Modal } from "../Modal/Modal";
 
 const statuses: TaskStatus[] = ["Todo", "In Progress", "Blocked", "Done"];
 
+const editingTaskSignal = signal<Partial<Task> | null>(null);
+
 export function Board() {
   const [tasks, setTasks] = useLocalStorage<Task[]>("zuno-tasks", []);
-  const editingTaskSignal = signal<Partial<Task> | null>(null);
 
   const handleCreateOrUpdate = (task: Partial<Task>) => {
     if (task.id) {
@@ -42,7 +43,7 @@ export function Board() {
   };
 
   const handleEdit = (id: string) => {
-    const task = tasks.value.find((t) => t.id === id);
+    const task = tasks.value.find((t: Task) => t.id === id);
     if (task) editingTaskSignal.value = task;
   };
 

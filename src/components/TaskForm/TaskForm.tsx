@@ -1,6 +1,7 @@
 import { signal } from "@preact/signals";
 import type { Task } from "../../types/task";
 import "./TaskForm.css";
+import { useEffect } from "preact/hooks";
 
 interface Props {
   initialTask?: Partial<Task>;
@@ -8,9 +9,14 @@ interface Props {
   onCancel: () => void;
 }
 
+const title = signal("");
+const description = signal("");
+
 export function TaskForm({ initialTask = {}, onSubmit, onCancel }: Props) {
-  const title = signal(initialTask.title || "");
-  const description = signal(initialTask.description || "");
+  useEffect(() => {
+    title.value = initialTask.title ?? "";
+    description.value = initialTask.description ?? "";
+  }, []);
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
