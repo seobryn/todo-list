@@ -1,4 +1,5 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect } from "preact/hooks";
+import { signal } from "@preact/signals";
 import { Column } from "../Column/Column";
 import type { Task, TaskStatus } from "../../types/task";
 import { useLocalStorage } from "../../hooks/useLocalStorage";
@@ -11,7 +12,7 @@ const statuses: TaskStatus[] = ["Todo", "In Progress", "Blocked", "Done"];
 
 export function Board() {
   const [tasks, setTasks] = useLocalStorage<Task[]>("zuno-tasks", []);
-  const [editingTask, setEditingTask] = useState<Partial<Task> | null>(null);
+  const editingTaskSignal = signal<Partial<Task> | null>(null);
 
   const handleCreateOrUpdate = (task: Partial<Task>) => {
     if (task.id) {
@@ -33,7 +34,7 @@ export function Board() {
       };
       setTasks((prev) => [...prev, newTask]);
     }
-    setEditingTask(null);
+    editingTaskSignal.value = null;
   };
 
   const handleDelete = (id: string) => {
@@ -41,8 +42,8 @@ export function Board() {
   };
 
   const handleEdit = (id: string) => {
-    const task = tasks.find((t) => t.id === id);
-    if (task) setEditingTask(task);
+    const task = tasks.value.find((t) => t.id === id);
+    if (task) editingTaskSignal.value = task;
   };
 
   const handleDropTask = (taskId: string, newStatus: TaskStatus) => {
@@ -76,7 +77,7 @@ export function Board() {
         <Column
           key={status}
           status={status}
-          tasks={tasks.filter((t) => t.status === status)}
+          tasks={tasks.value.filter((t) => t.status === status)}
           onEdit={handleEdit}
           onDelete={handleDelete}
           onDropTask={handleDropTask}
@@ -85,18 +86,18 @@ export function Board() {
 
       <button
         className="fab"
-        onClick={() => setEditingTask({})}
+        onClick={() => (editingTaskSignal.value = {})}
         title="Add task"
       >
         +
       </button>
 
-      {editingTask && (
-        <Modal onClose={() => setEditingTask(null)}>
+      {editingTaskSignal.value && (
+        <Modal onClose={() => (editingTaskSignal.value = null)}>
           <TaskForm
-            initialTask={editingTask}
+            initialTask={editingTaskSignal.value}
             onSubmit={handleCreateOrUpdate}
-            onCancel={() => setEditingTask(null)}
+            onCancel={() => (editingTaskSignal.value = null)}
           />
         </Modal>
       )}

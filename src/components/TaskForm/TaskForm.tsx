@@ -1,4 +1,4 @@
-import { useState } from "preact/hooks";
+import { signal } from "@preact/signals";
 import type { Task } from "../../types/task";
 import "./TaskForm.css";
 
@@ -9,16 +9,16 @@ interface Props {
 }
 
 export function TaskForm({ initialTask = {}, onSubmit, onCancel }: Props) {
-  const [title, setTitle] = useState(initialTask.title || "");
-  const [description, setDescription] = useState(initialTask.description || "");
+  const title = signal(initialTask.title || "");
+  const description = signal(initialTask.description || "");
 
   const handleSubmit = (e: Event) => {
     e.preventDefault();
     const now = new Date().toISOString();
     onSubmit({
       ...initialTask,
-      title,
-      description,
+      title: title.value,
+      description: description.value,
       createdDate: initialTask.createdDate || now,
       status: initialTask.status || "Todo",
     });
@@ -30,8 +30,8 @@ export function TaskForm({ initialTask = {}, onSubmit, onCancel }: Props) {
         Title:
         <input
           type="text"
-          value={title}
-          onInput={(e: any) => setTitle(e.target.value)}
+          value={title.value}
+          onInput={(e: any) => (title.value = e.target.value)}
           required
         />
       </label>
@@ -39,8 +39,8 @@ export function TaskForm({ initialTask = {}, onSubmit, onCancel }: Props) {
       <label>
         Description:
         <textarea
-          value={description}
-          onInput={(e: any) => setDescription(e.target.value)}
+          value={description.value}
+          onInput={(e: any) => (description.value = e.target.value)}
         />
       </label>
 
