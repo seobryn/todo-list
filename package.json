@@ -1,9 +1,10 @@
 {
   "name": "todo-list",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.1.2",
   "type": "module",
   "homepage": "https://seobryn.github.io/todo-list",
+  "license": "AGPL-3.0-only",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
