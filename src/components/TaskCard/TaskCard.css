@@ -50,6 +50,7 @@
     margin: 0.5rem 0;
     font-size: 0.95rem;
     color: #555;
+    text-wrap: balance;
 }
 
 .task-card small {
