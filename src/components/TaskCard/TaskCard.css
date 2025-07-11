@@ -46,7 +46,7 @@
     color: #333;
 }
 
-.task-card p {
+.task-card pre {
     margin: 0.5rem 0;
     font-size: 0.95rem;
     color: #555;

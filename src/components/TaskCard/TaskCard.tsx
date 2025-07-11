@@ -34,7 +34,7 @@ export function TaskCard({ task, onEdit, onDelete, onDragStart }: Props) {
       data-status={task.status}
     >
       <h3>{task.title}</h3>
-      <p>{task.description}</p>
+      <pre>{task.description}</pre>
       <small>Created: {formatDate(task.createdDate)}</small>
       {task.updatedDate && (
         <small className="updated-date">
