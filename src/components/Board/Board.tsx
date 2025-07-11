@@ -7,13 +7,14 @@ import { v4 as uuid } from "uuid";
 import { TaskForm } from "../TaskForm/TaskForm";
 import "./Board.css";
 import { Modal } from "../Modal/Modal";
+import { TASK_CREATED, TASK_DELETED, TASK_UPDATED } from "../../constants";
 
 const statuses: TaskStatus[] = ["Todo", "In Progress", "Blocked", "Done"];
 
 const editingTaskSignal = signal<Partial<Task> | null>(null);
 
 export function Board() {
-  const [tasks, setTasks] = useLocalStorage<Task[]>("zuno-tasks", []);
+  const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", []);
 
   const handleCreateOrUpdate = (task: Partial<Task>) => {
     if (task.id) {
@@ -23,6 +24,14 @@ export function Board() {
             ? { ...t, ...task, updatedDate: new Date().toISOString() }
             : t
         )
+      );
+      window.dispatchEvent(
+        new CustomEvent("toast-success", {
+          detail: TASK_UPDATED,
+          bubbles: false,
+          cancelable: true,
+          composed: false,
+        })
       );
     } else {
       const newTask: Task = {
@@ -34,16 +43,32 @@ export function Board() {
         updatedDate: "",
       };
       setTasks((prev) => [...prev, newTask]);
+      window.dispatchEvent(
+        new CustomEvent("toast-success", {
+          detail: TASK_CREATED,
+          bubbles: false,
+          cancelable: true,
+          composed: false,
+        })
+      );
     }
     editingTaskSignal.value = null;
   };
 
   const handleDelete = (id: string) => {
     setTasks((prev) => prev.filter((t) => t.id !== id));
+    window.dispatchEvent(
+      new CustomEvent("toast-success", {
+        detail: TASK_DELETED,
+        bubbles: false,
+        cancelable: true,
+        composed: false,
+      })
+    );
   };
 
   const handleEdit = (id: string) => {
-    const task = tasks.value.find((t: Task) => t.id === id);
+    const task = tasks.find((t: Task) => t.id === id);
     if (task) editingTaskSignal.value = task;
   };
 
@@ -78,7 +103,7 @@ export function Board() {
         <Column
           key={status}
           status={status}
-          tasks={tasks.value.filter((t) => t.status === status)}
+          tasks={tasks.filter((t) => t.status === status)}
           onEdit={handleEdit}
           onDelete={handleDelete}
           onDropTask={handleDropTask}
