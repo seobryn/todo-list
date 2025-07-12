@@ -3,8 +3,8 @@
     "short_name": "GetItDone",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#f0f2f5",
-    "theme_color": "#007bff",
+    "background_color": "#ff7f50",
+    "theme_color": "#1e90ff",
     "icons": [
         {
             "src": "192x192.png",
