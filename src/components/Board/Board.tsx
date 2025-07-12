@@ -7,11 +7,14 @@ import { v4 as uuid } from "uuid";
 import { TaskForm } from "../TaskForm/TaskForm";
 import "./Board.css";
 import { Modal } from "../Modal/Modal";
+import { NotificationModal } from "../NotificationModal/NotificationModal";
 import { TASK_CREATED, TASK_DELETED, TASK_UPDATED } from "../../constants";
+import { scheduleNotification } from "../../utils/notifications";
 
 const statuses: TaskStatus[] = ["Todo", "In Progress", "Blocked", "Done"];
 
 const editingTaskSignal = signal<Partial<Task> | null>(null);
+const reminderTaskSignal = signal<{ id: string; title: string } | null>(null);
 
 export function Board() {
   const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", []);
@@ -87,6 +90,39 @@ export function Board() {
     );
   };
 
+  const addReminder = (taskId: string) => {
+    const task = tasks.find((t) => t.id === taskId);
+    if (task) {
+      reminderTaskSignal.value = { id: task.id, title: task.title };
+    }
+  };
+
+  const handleScheduleNotification = (date: Date) => {
+    const reminderTask = reminderTaskSignal.value;
+    if (reminderTask) {
+      const task = tasks.find((t) => t.id === reminderTask.id);
+      if (task) {
+        scheduleNotification(
+          task.title,
+          {
+            body: task.description,
+            icon: "/todo-list/192x192.png",
+          },
+          date
+        );
+        window.dispatchEvent(
+          new CustomEvent("toast-success", {
+            detail: `Reminder set for ${date.toLocaleDateString()} at ${date.toLocaleTimeString()}`,
+            bubbles: false,
+            cancelable: true,
+            composed: false,
+          })
+        );
+      }
+    }
+    reminderTaskSignal.value = null;
+  };
+
   useEffect(() => {
     const handleClick = () => {
       document.querySelectorAll(".context-menu").forEach((menu) => {
@@ -106,6 +142,7 @@ export function Board() {
           tasks={tasks.filter((t) => t.status === status)}
           onEdit={handleEdit}
           onDelete={handleDelete}
+          addReminder={addReminder}
           onDropTask={handleDropTask}
         />
       ))}
@@ -126,6 +163,14 @@ export function Board() {
             onCancel={() => (editingTaskSignal.value = null)}
           />
         </Modal>
+      )}
+
+      {reminderTaskSignal.value && (
+        <NotificationModal
+          taskTitle={reminderTaskSignal.value.title}
+          onClose={() => (reminderTaskSignal.value = null)}
+          onSchedule={handleScheduleNotification}
+        />
       )}
     </div>
   );

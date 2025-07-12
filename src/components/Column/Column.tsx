@@ -7,10 +7,18 @@ interface Props {
   tasks: Task[];
   onEdit: (id: string) => void;
   onDelete: (id: string) => void;
+  addReminder: (id: string) => void;
   onDropTask: (taskId: string, newStatus: TaskStatus) => void;
 }
 
-export function Column({ status, tasks, onEdit, onDelete, onDropTask }: Props) {
+export function Column({
+  status,
+  tasks,
+  onEdit,
+  onDelete,
+  onDropTask,
+  addReminder,
+}: Props) {
   const handleDrop = (e: DragEvent) => {
     e.preventDefault();
     const taskId = e.dataTransfer?.getData("text/plain");
@@ -40,6 +48,7 @@ export function Column({ status, tasks, onEdit, onDelete, onDropTask }: Props) {
             task={task}
             onEdit={onEdit}
             onDelete={onDelete}
+            addReminder={addReminder}
             onDragStart={handleDragStart}
           />
         ))}
