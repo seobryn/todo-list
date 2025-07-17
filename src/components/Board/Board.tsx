@@ -2,8 +2,8 @@ import { useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
 import { Column } from "../Column/Column";
 import type { Task, TaskStatus } from "../../types/task";
-import { useLocalStorage } from "../../hooks/useLocalStorage";
-import { v4 as uuid } from "uuid";
+import { useStore } from "../../store";
+import { v6 as uuid } from "uuid";
 import { TaskForm } from "../TaskForm/TaskForm";
 import "./Board.css";
 import { Modal } from "../Modal/Modal";
@@ -17,17 +17,13 @@ const editingTaskSignal = signal<Partial<Task> | null>(null);
 const reminderTaskSignal = signal<{ id: string; title: string } | null>(null);
 
 export function Board() {
-  const [tasks, setTasks] = useLocalStorage<Task[]>("tasks", []);
-
+  const { tasks, addTask, editTask, removeTask } = useStore();
   const handleCreateOrUpdate = (task: Partial<Task>) => {
     if (task.id) {
-      setTasks((prev) =>
-        prev.map((t) =>
-          t.id === task.id
-            ? { ...t, ...task, updatedDate: new Date().toISOString() }
-            : t
-        )
-      );
+      editTask(task.id!, {
+        ...(task as Task),
+        updatedDate: new Date().toISOString(),
+      });
       window.dispatchEvent(
         new CustomEvent("toast-success", {
           detail: TASK_UPDATED,
@@ -45,7 +41,7 @@ export function Board() {
         createdDate: new Date().toISOString(),
         updatedDate: "",
       };
-      setTasks((prev) => [...prev, newTask]);
+      addTask(newTask);
       window.dispatchEvent(
         new CustomEvent("toast-success", {
           detail: TASK_CREATED,
@@ -59,7 +55,7 @@ export function Board() {
   };
 
   const handleDelete = (id: string) => {
-    setTasks((prev) => prev.filter((t) => t.id !== id));
+    removeTask(id);
     window.dispatchEvent(
       new CustomEvent("toast-success", {
         detail: TASK_DELETED,
@@ -76,18 +72,12 @@ export function Board() {
   };
 
   const handleDropTask = (taskId: string, newStatus: TaskStatus) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === taskId
-          ? {
-              ...t,
-              status: newStatus,
-              completionDate:
-                newStatus === "Done" ? new Date().toISOString() : undefined,
-            }
-          : t
-      )
-    );
+    editTask(taskId, {
+      ...(tasks.find((t) => t.id === taskId) as Task),
+      status: newStatus,
+      completionDate:
+        newStatus === "Done" ? new Date().toISOString() : undefined,
+    });
   };
 
   const addReminder = (taskId: string) => {

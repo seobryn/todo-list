@@ -14,11 +14,11 @@ export function Modal({ children, onClose }: Props) {
     setTimeout(() => {
       setClosing(false);
       onClose();
-    }, 300); // match animation duration
+    }, 300);
   };
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
+    <div className="modal-overlay" onClick={handleClose}>
       <div
         className={`modal-content ${closing ? "fade-out" : ""}`}
         onClick={(e) => e.stopPropagation()}
