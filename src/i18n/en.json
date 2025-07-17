@@ -1,0 +1,10 @@
+{
+    "modal": {
+        "close": "Close",
+        "setReminder": "Set Reminder",
+        "notifyMeOn": "Notify me on:",
+        "cancel": "Cancel",
+        "scheduleReminder": "Schedule Reminder",
+        "futureDateAlert": "Please select a future date and time"
+    }
+}

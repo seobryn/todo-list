@@ -1,0 +1,10 @@
+{
+    "modal": {
+        "close": "Cerrar",
+        "setReminder": "Establecer Recordatorio",
+        "notifyMeOn": "Notificarme el:",
+        "cancel": "Cancelar",
+        "scheduleReminder": "Programar Recordatorio",
+        "futureDateAlert": "Por favor seleccione una fecha y hora futuras"
+    }
+}

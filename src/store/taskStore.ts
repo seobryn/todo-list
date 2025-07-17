@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { Task } from "./types/task";
+import type { Task } from "../types/task";
 import { v6 as uuid } from "uuid";
 
 interface TaskState {

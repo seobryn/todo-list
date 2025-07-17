@@ -2,7 +2,7 @@ import { useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
 import { Column } from "../Column/Column";
 import type { Task, TaskStatus } from "../../types/task";
-import { useStore } from "../../store";
+import { useStore } from "../../store/taskStore";
 import { v6 as uuid } from "uuid";
 import { TaskForm } from "../TaskForm/TaskForm";
 import "./Board.css";
@@ -73,7 +73,7 @@ export function Board() {
 
   const handleDropTask = (taskId: string, newStatus: TaskStatus) => {
     editTask(taskId, {
-      ...(tasks.find((t) => t.id === taskId) as Task),
+      ...(tasks.find((t: Task) => t.id === taskId) as Task),
       status: newStatus,
       completionDate:
         newStatus === "Done" ? new Date().toISOString() : undefined,
@@ -81,7 +81,7 @@ export function Board() {
   };
 
   const addReminder = (taskId: string) => {
-    const task = tasks.find((t) => t.id === taskId);
+    const task = tasks.find((t: Task) => t.id === taskId);
     if (task) {
       reminderTaskSignal.value = { id: task.id, title: task.title };
     }
@@ -90,7 +90,7 @@ export function Board() {
   const handleScheduleNotification = (date: Date) => {
     const reminderTask = reminderTaskSignal.value;
     if (reminderTask) {
-      const task = tasks.find((t) => t.id === reminderTask.id);
+      const task = tasks.find((t: Task) => t.id === reminderTask.id);
       if (task) {
         scheduleNotification(
           task.title,
@@ -129,7 +129,7 @@ export function Board() {
         <Column
           key={status}
           status={status}
-          tasks={tasks.filter((t) => t.status === status)}
+          tasks={tasks.filter((t: Task) => t.status === status)}
           onEdit={handleEdit}
           onDelete={handleDelete}
           addReminder={addReminder}

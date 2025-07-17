@@ -1,5 +1,5 @@
-import { useState } from "preact/hooks";
 import "./Modal.css";
+import { useModalStore } from "../../store/ModalStore";
 
 interface Props {
   children: preact.ComponentChildren;
@@ -7,23 +7,15 @@ interface Props {
 }
 
 export function Modal({ children, onClose }: Props) {
-  const [closing, setClosing] = useState(false);
-
-  const handleClose = () => {
-    setClosing(true);
-    setTimeout(() => {
-      setClosing(false);
-      onClose();
-    }, 300);
-  };
+  const { closing, handleClose } = useModalStore();
 
   return (
-    <div className="modal-overlay" onClick={handleClose}>
+    <div className="modal-overlay" onClick={() => handleClose(onClose)}>
       <div
         className={`modal-content ${closing ? "fade-out" : ""}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <button className="modal-close" onClick={handleClose}>
+        <button className="modal-close" onClick={() => handleClose(onClose)}>
           &times;
         </button>
         {children}
