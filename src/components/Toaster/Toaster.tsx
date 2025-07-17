@@ -2,6 +2,7 @@ import { v6 as uuid } from "uuid";
 import "./Toaster.css";
 import { useEffect } from "preact/hooks";
 import { signal } from "@preact/signals";
+import { Text } from "preact-i18n";
 
 interface ToastProps {
   type: "success" | "error" | "warning" | "info";
@@ -45,7 +46,9 @@ const Toast = ({ type, message }: ToastProps) => {
         justifyContent: "space-between",
       }}
     >
-      <span>{message}</span>
+      <span>
+        <Text id={message}>{message}</Text>
+      </span>
     </div>
   );
 };

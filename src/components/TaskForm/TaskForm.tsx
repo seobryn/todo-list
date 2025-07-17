@@ -2,6 +2,7 @@ import { signal } from "@preact/signals";
 import type { Task } from "../../types/task";
 import "./TaskForm.css";
 import { useEffect } from "preact/hooks";
+import { Text } from "preact-i18n";
 
 interface Props {
   initialTask?: Partial<Task>;
@@ -33,7 +34,7 @@ export function TaskForm({ initialTask = {}, onSubmit, onCancel }: Props) {
   return (
     <form className="task-form" onSubmit={handleSubmit}>
       <label>
-        Title:
+        <Text id="taskForm.title">Title:</Text>
         <input
           type="text"
           value={title.value}
@@ -43,7 +44,7 @@ export function TaskForm({ initialTask = {}, onSubmit, onCancel }: Props) {
       </label>
 
       <label>
-        Description:
+        <Text id="taskForm.description">Description:</Text>
         <textarea
           value={description.value}
           onInput={(e: any) => (description.value = e.target.value)}
@@ -52,10 +53,10 @@ export function TaskForm({ initialTask = {}, onSubmit, onCancel }: Props) {
 
       <div className="button-group">
         <button type="submit" className="save">
-          Save
+          <Text id="taskForm.save">Save</Text>
         </button>
         <button type="button" className="cancel" onClick={onCancel}>
-          Cancel
+          <Text id="taskForm.cancel">Cancel</Text>
         </button>
       </div>
     </form>

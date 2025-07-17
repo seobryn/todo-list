@@ -1,3 +1,4 @@
+import { Text } from "preact-i18n";
 import type { Task } from "../../types/task";
 import { formatDate, formatDateTime } from "../../utils/formatter";
 import "./TaskCard.css";
@@ -42,21 +43,34 @@ export function TaskCard({
     >
       <h3>{task.title}</h3>
       <pre>{task.description}</pre>
-      <small>Created: {formatDate(task.createdDate)}</small>
+      <small>
+        <Text id="task.created">Created: </Text>
+        {formatDate(task.createdDate)}
+      </small>
       {task.updatedDate && (
         <small className="updated-date">
-          Last updated: {formatDateTime(task.updatedDate)}
+          <Text id="task.lastUpdated">Last updated: </Text>
+          {formatDateTime(task.updatedDate)}
         </small>
       )}
       {task.completionDate && (
-        <small>Completed: {formatDate(task.completionDate)}</small>
+        <small>
+          <Text id="task.completed">Completed: </Text>
+          {formatDate(task.completionDate)}
+        </small>
       )}
 
       {/* Contextual Menu */}
       <ul id={`menu-${task.id}`} className="context-menu">
-        <li onClick={() => addReminder(task.id)}>🔔 Add Reminder</li>
-        <li onClick={() => onEdit(task.id)}>✏️ Edit</li>
-        <li onClick={() => onDelete(task.id)}>🗑️ Delete</li>
+        <li onClick={() => addReminder(task.id)}>
+          🔔 <Text id="contextMenu.addReminder">Add Reminder</Text>
+        </li>
+        <li onClick={() => onEdit(task.id)}>
+          ✏️ <Text id="contextMenu.edit">Edit</Text>
+        </li>
+        <li onClick={() => onDelete(task.id)}>
+          🗑️ <Text id="contextMenu.delete">Delete</Text>
+        </li>
       </ul>
     </div>
   );

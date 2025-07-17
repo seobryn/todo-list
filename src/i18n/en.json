@@ -1,4 +1,7 @@
 {
+    "main": {
+        "appTitle": "Get It Done!"
+    },
     "modal": {
         "close": "Close",
         "setReminder": "Set Reminder",
@@ -6,5 +9,26 @@
         "cancel": "Cancel",
         "scheduleReminder": "Schedule Reminder",
         "futureDateAlert": "Please select a future date and time"
+    },
+    "task": {
+        "created": "Created: ",
+        "lastUpdated": "Last updated: ",
+        "completed": "Completed: "
+    },
+    "contextMenu": {
+        "addReminder": "Add Reminder",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "taskForm": {
+        "title": "Title",
+        "description": "Description",
+        "save": "Save",
+        "cancel": "Cancel"
+    },
+    "notifications": {
+        "taskCreated": "Task created successfully",
+        "taskUpdated": "Task updated successfully",
+        "taskDeleted": "Task deleted successfully"
     }
 }

@@ -13,10 +13,13 @@
   "dependencies": {
     "@preact/signals": "^2.2.1",
     "preact": "^10.26.9",
-    "uuid": "^11.1.0"
+    "preact-i18n": "2.4.0-preactx",
+    "uuid": "^11.1.0",
+    "zustand": "^5.0.6"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.10.2",
+    "@types/preact-i18n": "^2.3.6",
     "typescript": "~5.8.3",
     "vite": "^7.0.3"
   }

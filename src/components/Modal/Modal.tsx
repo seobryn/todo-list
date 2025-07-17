@@ -1,5 +1,5 @@
 import "./Modal.css";
-import { useModalStore } from "../../store/ModalStore";
+import { useModalStore } from "../../store/modalStore";
 
 interface Props {
   children: preact.ComponentChildren;

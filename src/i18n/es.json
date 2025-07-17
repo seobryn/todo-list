@@ -1,4 +1,7 @@
 {
+    "main": {
+        "appTitle": "Get It Done!"
+    },
     "modal": {
         "close": "Cerrar",
         "setReminder": "Establecer Recordatorio",
@@ -6,5 +9,26 @@
         "cancel": "Cancelar",
         "scheduleReminder": "Programar Recordatorio",
         "futureDateAlert": "Por favor seleccione una fecha y hora futuras"
+    },
+    "task": {
+        "created": "Creado: ",
+        "lastUpdated": "Última actualización: ",
+        "completed": "Completado: "
+    },
+    "contextMenu": {
+        "addReminder": "Agregar Recordatorio",
+        "edit": "Editar",
+        "delete": "Eliminar"
+    },
+    "taskForm": {
+        "title": "Título",
+        "description": "Descripción",
+        "save": "Guardar",
+        "cancel": "Cancelar"
+    },
+    "notifications": {
+        "taskCreated": "Tarea creada exitosamente",
+        "taskUpdated": "Tarea actualizada exitosamente",
+        "taskDeleted": "Tarea eliminada exitosamente"
     }
 }

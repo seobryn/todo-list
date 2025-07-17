@@ -1,6 +1,7 @@
 import { useState } from "preact/hooks";
 import { Modal } from "../Modal/Modal";
 import "./NotificationModal.css";
+import { Text } from "preact-i18n";
 
 interface Props {
   taskTitle: string;
@@ -33,14 +34,19 @@ export function NotificationModal({ taskTitle, onClose, onSchedule }: Props) {
   return (
     <Modal onClose={onClose}>
       <div className="notification-modal">
-        <h3>Set Reminder</h3>
+        <h3>
+          <Text id="modal.setReminder">Set Reminder</Text>
+        </h3>
         <p>
-          Set a notification for: <strong>{taskTitle}</strong>
+          <Text id="modal.setReminderFor">Set a notification for: </Text>
+          <strong>{taskTitle}</strong>
         </p>
 
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="notification-time">Notify me on:</label>
+            <label htmlFor="notification-time">
+              <Text id="modal.notifyOn">Notify me on:</Text>
+            </label>
             <input
               id="notification-time"
               type="datetime-local"
@@ -55,10 +61,10 @@ export function NotificationModal({ taskTitle, onClose, onSchedule }: Props) {
 
           <div className="modal-actions">
             <button type="button" onClick={onClose} className="btn-secondary">
-              Cancel
+              <Text id="modal.cancel">Cancel</Text>
             </button>
             <button type="submit" className="btn-primary">
-              Schedule Reminder
+              <Text id="modal.scheduleReminder">Schedule Reminder</Text>
             </button>
           </div>
         </form>

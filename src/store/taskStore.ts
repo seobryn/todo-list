@@ -9,8 +9,10 @@ interface TaskState {
   removeTask: (id: string) => void;
 }
 
+const savedData = JSON.parse(localStorage.getItem("tasks") || "[]");
+
 export const useStore = create<TaskState>((set) => ({
-  tasks: [],
+  tasks: [...(savedData as Task[])],
   addTask: (newTask: Task) =>
     set((state) => ({
       tasks: [...state.tasks, { ...newTask, id: uuid(), completed: false }],

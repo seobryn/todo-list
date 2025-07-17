@@ -1,3 +1,3 @@
-export const TASK_UPDATED = "Task updated successfully";
-export const TASK_CREATED = "Task created successfully";
-export const TASK_DELETED = "Task deleted successfully";
+export const TASK_CREATED = "notifications.taskCreated";
+export const TASK_UPDATED = "notifications.taskUpdated";
+export const TASK_DELETED = "notifications.taskDeleted";
