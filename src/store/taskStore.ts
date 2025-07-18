@@ -13,18 +13,28 @@ const savedData = JSON.parse(localStorage.getItem("tasks") || "[]");
 
 export const useStore = create<TaskState>((set) => ({
   tasks: [...(savedData as Task[])],
-  addTask: (newTask: Task) =>
-    set((state) => ({
-      tasks: [...state.tasks, { ...newTask, id: uuid(), completed: false }],
-    })),
+  addTask: (newTask: Task) => {
+    set((state) => {
+      localStorage.setItem(
+        "tasks",
+        JSON.stringify([...state.tasks, { ...newTask, id: uuid() }])
+      );
+      return {
+        tasks: [...state.tasks, { ...newTask, id: uuid(), completed: false }],
+      };
+    });
+  },
   editTask: (id, newTask: Task) =>
-    set((state) => ({
-      tasks: state.tasks.map((task) =>
-        task.id === id ? { ...task, ...newTask } : task
-      ),
-    })),
+    set((state) => {
+      const tasks = [...state.tasks, { ...newTask, id }];
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      return {
+        tasks,
+      };
+    }),
   removeTask: (id) =>
-    set((state) => ({
-      tasks: state.tasks.filter((task) => task.id !== id),
-    })),
+    set((state) => {
+      const newTasks = state.tasks.filter((task) => task.id !== id);
+      return { tasks: newTasks };
+    }),
 }));
