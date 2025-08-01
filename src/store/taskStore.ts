@@ -25,13 +25,13 @@ export const useStore = create<TaskState>((set) => ({
       };
     });
   },
-  editTask: (id, newTask: Task) =>
+  editTask: (id, updatedTask: Task) =>
     set((state) => {
-      const tasks = [...state.tasks, { ...newTask, id }];
+      const tasks = state.tasks.map((task) =>
+        task.id === id ? { ...updatedTask, id } : task
+      );
       localStorage.setItem("tasks", JSON.stringify(tasks));
-      return {
-        tasks,
-      };
+      return { tasks };
     }),
   removeTask: (id) =>
     set((state) => {
