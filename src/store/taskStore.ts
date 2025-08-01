@@ -14,13 +14,14 @@ const savedData = JSON.parse(localStorage.getItem("tasks") || "[]");
 export const useStore = create<TaskState>((set) => ({
   tasks: [...(savedData as Task[])],
   addTask: (newTask: Task) => {
+    const id = uuid();
     set((state) => {
       localStorage.setItem(
         "tasks",
-        JSON.stringify([...state.tasks, { ...newTask, id: uuid() }])
+        JSON.stringify([...state.tasks, { ...newTask, id }])
       );
       return {
-        tasks: [...state.tasks, { ...newTask, id: uuid(), completed: false }],
+        tasks: [...state.tasks, { ...newTask, id, completed: false }],
       };
     });
   },
